@@ -23,11 +23,18 @@ const watson = require('watson-developer-cloud');
 // Bootstrap application settings
 require('./config/express')(app);
 
+var secret = process.env.SECRET_JSON
+var jsonBody=JSON.parse(secret)
+
+
 const stt = new watson.SpeechToTextV1({
   // if left undefined, username and password to fall back to the SPEECH_TO_TEXT_USERNAME and
   // SPEECH_TO_TEXT_PASSWORD environment properties, and then to VCAP_SERVICES (on Bluemix)
   // username: '',
   // password: ''
+
+ username: jsonBody.username,
+  password: jsonBody.password,
 });
 
 const authService = new watson.AuthorizationV1(stt.getCredentials());
